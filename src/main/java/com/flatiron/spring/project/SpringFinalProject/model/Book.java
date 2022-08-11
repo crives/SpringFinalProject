@@ -3,6 +3,8 @@ package com.flatiron.spring.project.SpringFinalProject.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +39,8 @@ public class Book {
             name = "genres",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    // TODO double check:
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Genre> genres;
 
     public void addGenre(Genre genre) {

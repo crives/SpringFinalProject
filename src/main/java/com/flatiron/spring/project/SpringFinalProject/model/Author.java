@@ -3,6 +3,8 @@ package com.flatiron.spring.project.SpringFinalProject.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +26,8 @@ public class Author {
     private String name;
 
     @OneToMany(mappedBy = "author")
+    // TODO double check:
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
