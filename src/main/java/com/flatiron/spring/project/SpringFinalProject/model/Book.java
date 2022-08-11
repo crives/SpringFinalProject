@@ -39,7 +39,6 @@ public class Book {
             name = "genres",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    // TODO double check:
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Genre> genres;
 

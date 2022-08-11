@@ -17,5 +17,5 @@ public class CreateReadingListDTO {
     @NotBlank
     private String name;
 
-    private List<BookDTO> books;
+    private List<Book> books;
 }

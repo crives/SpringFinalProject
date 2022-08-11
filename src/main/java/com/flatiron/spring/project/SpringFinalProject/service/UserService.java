@@ -7,7 +7,10 @@ import com.flatiron.spring.project.SpringFinalProject.model.User;
 import com.flatiron.spring.project.SpringFinalProject.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+@Service
 public class UserService {
 
     @Autowired
@@ -21,14 +24,8 @@ public class UserService {
         return mapper.map(repository.save(user), UserSearchResultDTO.class);
     }
 
-    public UserSearchResultDTO getById(Long id) {
-        UserSearchResultDTO userResultDTO = repository
-                .findById(id)
-                .map(user -> mapper.map(user,
-                        UserSearchResultDTO.class)).orElseThrow(() -> new NotFoundException("User not found"));
-//        TODO check below:
-//        userResultDTO.setActivities(signupService.getActivitiesByCamperId(id));
-        return userResultDTO;
+    public Optional<User> getUserById(Long id) {
+        return repository.findById(id);
     }
 
     public void deleteById(Long id) {
@@ -38,4 +35,6 @@ public class UserService {
             throw new NotFoundException("User not found");
         }
     }
+
+
 }

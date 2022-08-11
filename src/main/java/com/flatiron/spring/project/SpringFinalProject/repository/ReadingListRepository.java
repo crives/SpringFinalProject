@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface ReadingListRepository extends JpaRepository<ReadingList, Long> {
 
-    List<ReadingList> findAllByUserId(Long userId);
-    List<ReadingList> findAllByReadingListId(Long readingListId);
-
+    List<ReadingList> findAllById(Long id);
 }

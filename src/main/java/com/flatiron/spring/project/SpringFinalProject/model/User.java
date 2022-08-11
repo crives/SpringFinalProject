@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @Entity(name = "User")
@@ -27,5 +28,5 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private ReadingList readingList;
+    private List<ReadingList> readingList;
 }
