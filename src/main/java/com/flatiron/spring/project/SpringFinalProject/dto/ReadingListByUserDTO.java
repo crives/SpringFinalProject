@@ -14,7 +14,7 @@ public class ReadingListByUserDTO {
     @JsonProperty("user_id")
     @Positive
     @NotNull
-    private Long userId;
+    private Long id;
     @JsonProperty("reading_list_id")
     @Positive
     @NotNull

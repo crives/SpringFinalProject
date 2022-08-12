@@ -8,7 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -29,7 +30,8 @@ public class Book {
     private int pages;
 
     // TODO Must be before today
-    private LocalDateTime published;
+    @Temporal(TemporalType.DATE)
+    private Date published;
 
     @ManyToOne
     private Author author;

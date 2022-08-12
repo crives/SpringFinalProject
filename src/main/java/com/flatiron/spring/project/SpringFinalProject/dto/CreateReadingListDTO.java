@@ -9,13 +9,14 @@ import java.util.List;
 
 // Create a new reading list for the user with the given ID
 // POST /api/users/{id}/reading_lists
+// list/{id}/book/{id}
 @Data
 public class CreateReadingListDTO {
     @JsonProperty("user_id")
-    private Long userId;
+    private Long id;
 
     @NotBlank
     private String name;
 
-    private List<Book> books;
+//    private List<BookDTO> books;
 }
