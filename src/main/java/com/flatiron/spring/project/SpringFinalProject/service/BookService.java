@@ -54,24 +54,28 @@ public class BookService {
                 .collect(Collectors.toList());
 
         Book book = mapper.map(createBookDTO, Book.class);
-        book.setGenres(genres);
         book.setAuthor(author);
-        authorRepository.save(author);
+        book.setGenres(genres);
 
+        authorRepository.save(author);
         genres.forEach(genre -> genreRepository.save(genre));
         // Map the book to search result DTO
         return mapper.map(repository.save(book), BookSearchResultDTO.class);
     }
 
-    public List<BookDTO> getAll() {
+    public List<BookSearchResultDTO> getAll() {
         return repository.findAll()
                 .stream()
-                .map(book -> mapper.map(book, BookDTO.class))
+                .map(book -> mapper.map(book, BookSearchResultDTO.class))
                 .toList();
     }
 
-    public Optional<Book> getBookById(Long id) {
-        return repository.findById(id);
+    public BookSearchResultDTO getBookById(Long id) {
+        BookSearchResultDTO bookSearchResultDTO = repository
+                .findById(id)
+                .map(book -> mapper.map(book, BookSearchResultDTO.class))
+                .orElseThrow(() -> new NotFoundException("Book not found"));
+        return bookSearchResultDTO;
     }
 
     public void deleteById(Long id) {
