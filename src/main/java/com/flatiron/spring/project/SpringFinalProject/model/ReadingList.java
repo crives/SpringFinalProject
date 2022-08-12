@@ -33,7 +33,6 @@ public class ReadingList {
             name = "reading_lists",
             joinColumns = @JoinColumn(name = "reading_list_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    // TODO double check:
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Book> books;
 

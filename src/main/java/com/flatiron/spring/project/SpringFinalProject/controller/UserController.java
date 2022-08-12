@@ -37,6 +37,6 @@ public class UserController {
 
     @PostMapping("/{id}/reading_lists")
     public ReadingListByUserDTO createReadingListById(@PathVariable Long id, @RequestBody CreateReadingListDTO createReadingListDTO) {
-       return userService.createReadingList(createReadingListDTO);
+       return userService.createReadingList(id, createReadingListDTO);
     }
 }

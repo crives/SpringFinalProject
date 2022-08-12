@@ -1,6 +1,5 @@
 package com.flatiron.spring.project.SpringFinalProject.service;
 
-import com.flatiron.spring.project.SpringFinalProject.dto.BookDTO;
 import com.flatiron.spring.project.SpringFinalProject.dto.BookSearchResultDTO;
 import com.flatiron.spring.project.SpringFinalProject.dto.CreateBookDTO;
 import com.flatiron.spring.project.SpringFinalProject.dto.GenreDTO;
@@ -15,9 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /*
@@ -85,11 +82,4 @@ public class BookService {
             throw new NotFoundException("Book not found");
         }
     }
-
-//    public List<BookDTO> getBooksByGenreId(Long genreId) {
-//        List<Book> booksByGenreId = repository.getAllByGenreId(genreId);
-//        return booksByGenreId.stream()
-//                .map(book -> mapper.map(book, BookDTO.class))
-//                .toList();
-//    }
 }

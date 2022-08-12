@@ -1,13 +1,12 @@
 package com.flatiron.spring.project.SpringFinalProject.service;
 
-import com.flatiron.spring.project.SpringFinalProject.dto.CreateReadingListDTO;
-import com.flatiron.spring.project.SpringFinalProject.dto.CreateUserDTO;
-import com.flatiron.spring.project.SpringFinalProject.dto.ReadingListByUserDTO;
-import com.flatiron.spring.project.SpringFinalProject.dto.UserSearchResultDTO;
+import com.flatiron.spring.project.SpringFinalProject.dto.*;
 import com.flatiron.spring.project.SpringFinalProject.exception.NotFoundException;
 import com.flatiron.spring.project.SpringFinalProject.exception.ValidationException;
+import com.flatiron.spring.project.SpringFinalProject.model.Book;
 import com.flatiron.spring.project.SpringFinalProject.model.ReadingList;
 import com.flatiron.spring.project.SpringFinalProject.model.User;
+import com.flatiron.spring.project.SpringFinalProject.repository.BookRepository;
 import com.flatiron.spring.project.SpringFinalProject.repository.ReadingListRepository;
 import com.flatiron.spring.project.SpringFinalProject.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -24,6 +23,9 @@ public class UserService {
 
     @Autowired
     private ReadingListRepository readingListRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -61,17 +63,23 @@ public class UserService {
 //    }
 
     // Create a new reading list for the user with the given user ID
-    public ReadingListByUserDTO createReadingList(CreateReadingListDTO createReadingListDTO) {
+    public ReadingListByUserDTO createReadingList(Long id, CreateReadingListDTO createReadingListDTO) {
         ReadingList readingList = new ReadingList();
         readingList.setName(createReadingListDTO.getName());
         readingList.setUser(
-                getUserById(
-                        createReadingListDTO.getId()
-                        ).orElseThrow(() -> new ValidationException()));
+                getUserById(id).orElseThrow(() -> new ValidationException()));
 
+        List<BookDTO> readingListDTOBookList = createReadingListDTO.getBooks();
 
-//        readingList.setBooks(createReadingListDTO.getBooks());
+        List<String> bookTitleList = readingListDTOBookList
+                .stream()
+                .map(book -> book.getTitle())
+                .toList();
+        List<Book> bookList = bookRepository.findAllByTitleIn(bookTitleList);
+
+        readingList.setBooks(bookList);
         readingList = readingListRepository.save(readingList);
+
         return mapper.map(readingList, ReadingListByUserDTO.class);
     }
 }
