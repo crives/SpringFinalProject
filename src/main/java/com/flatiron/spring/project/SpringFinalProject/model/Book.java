@@ -7,9 +7,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class Book {
     @NotBlank
     private String title;
 
-    @Size(min = 1)
+    @Min(1)
     private int pages;
 
     @Temporal(TemporalType.DATE)
