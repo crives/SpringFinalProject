@@ -39,6 +39,12 @@ public class BookController {
         return service.getBookById(id);
     }
 
+    @PutMapping("/{id}")
+    public BookSearchResultDTO updateBookById(@PathVariable Long id,
+                                              @Valid @RequestBody CreateBookDTO createBookDTO) {
+        return service.updateBookById(id, createBookDTO);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
         service.deleteById(id);

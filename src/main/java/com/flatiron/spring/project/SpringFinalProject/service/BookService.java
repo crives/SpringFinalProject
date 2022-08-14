@@ -1,5 +1,6 @@
 package com.flatiron.spring.project.SpringFinalProject.service;
 
+import com.flatiron.spring.project.SpringFinalProject.dto.AuthorDTO;
 import com.flatiron.spring.project.SpringFinalProject.dto.BookSearchResultDTO;
 import com.flatiron.spring.project.SpringFinalProject.dto.CreateBookDTO;
 import com.flatiron.spring.project.SpringFinalProject.dto.GenreDTO;
@@ -45,15 +46,18 @@ public class BookService {
         Author author = new Author();
         author.setName(createBookDTO.getAuthor());
 
+        // Create genres
         List<GenreDTO> genresDTO = createBookDTO.getGenres();
         List<Genre> genres = genresDTO.stream()
                 .map(genreDTO -> mapper.map(genreDTO, Genre.class))
                 .collect(Collectors.toList());
 
+        // Create book
         Book book = mapper.map(createBookDTO, Book.class);
         book.setAuthor(author);
         book.setGenres(genres);
 
+        // Save author and genres to repositories
         authorRepository.save(author);
         genres.forEach(genre -> genreRepository.save(genre));
         // Map the book to search result DTO
@@ -73,6 +77,49 @@ public class BookService {
                 .map(book -> mapper.map(book, BookSearchResultDTO.class))
                 .orElseThrow(() -> new NotFoundException("Book not found"));
         return bookSearchResultDTO;
+    }
+
+    public BookSearchResultDTO updateBookById(Long id, CreateBookDTO createBookDTO) {
+        // Find book and map to bookSearchResultDTO
+        BookSearchResultDTO bookDTO = repository
+                .findById(id)
+                .map(bk -> mapper.map(bk, BookSearchResultDTO.class))
+                .orElseThrow(() -> new NotFoundException("Book not found"));
+
+        // Set bookSearchResultDTO to createBookDTO values
+        bookDTO.setTitle(createBookDTO.getTitle());
+        bookDTO.setPages(createBookDTO.getPages());
+        bookDTO.setPublished(createBookDTO.getPublished());
+
+        List<GenreDTO> genresDTO = createBookDTO.getGenres();
+        bookDTO.setGenres(genresDTO);
+
+        // Convert genreDTO to list of genres to save to book repository
+        List<Genre> genres = genresDTO.stream()
+                .map(genreDTO -> mapper.map(genreDTO, Genre.class))
+                .collect(Collectors.toList());
+
+        // Create author to convert from String author name
+        Author author = new Author();
+        author.setName(createBookDTO.getAuthor());
+
+        // Set author for bookDTO
+        bookDTO.setAuthor(
+                mapper.map(author, AuthorDTO.class));
+
+        // Save author
+        authorRepository.save(author);
+
+        // Save genres
+        genres.forEach(genre -> genreRepository.save(genre));
+
+        Book book = mapper.map(bookDTO, Book.class);
+        book.setAuthor(author);
+        book.setGenres(genres);
+
+        // Save book
+        repository.save(book);
+        return bookDTO;
     }
 
     public void deleteById(Long id) {

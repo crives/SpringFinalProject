@@ -12,8 +12,6 @@ import java.util.List;
 // list/{id}/book/{id}
 @Data
 public class CreateReadingListDTO {
-//    @JsonProperty("user_id")
-//    private Long id;
 
     @NotBlank
     private String name;

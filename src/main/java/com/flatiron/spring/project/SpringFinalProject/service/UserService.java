@@ -47,20 +47,21 @@ public class UserService {
         }
     }
 
-    public List<ReadingListByUserDTO> getReadingListById(Long id) {
-    List<ReadingList> readingListByUserId = repository.findAllReadingListById(id);
-    return readingListByUserId.stream()
-            .map(readingList -> mapper.map(readingList, ReadingListByUserDTO.class))
+    public List<ReadingListByIdDTO> getReadingListById(Long userId, Long id) {
+    List<ReadingList> readingListById = readingListRepository.findAllByIdAndUserId(userId, id);
+    return readingListById
+            .stream()
+            .map(readingList -> mapper.map(readingList, ReadingListByIdDTO.class))
             .toList();
     }
 
-//    public List<ReadingListByIdDTO> getListByListId(Long id) {
-//        List<ReadingList> readingListByListId = repository.findAllById(id);
-//        return readingListByListId
-//                .stream()
-//                .map(readingList -> mapper.map(readingList, ReadingListByIdDTO.class))
-//                .toList();
-//    }
+    public List<ReadingListByIdDTO> getReadingListByUserId(Long id) {
+        List<ReadingList> readingListByListId = readingListRepository.findAllByUserId(id);
+        return readingListByListId
+                .stream()
+                .map(readingList -> mapper.map(readingList, ReadingListByIdDTO.class))
+                .toList();
+    }
 
     // Create a new reading list for the user with the given user ID
     public ReadingListByUserDTO createReadingList(Long id, CreateReadingListDTO createReadingListDTO) {
@@ -70,7 +71,6 @@ public class UserService {
                 getUserById(id).orElseThrow(() -> new ValidationException()));
 
         List<BookDTO> readingListDTOBookList = createReadingListDTO.getBooks();
-
         List<String> bookTitleList = readingListDTOBookList
                 .stream()
                 .map(book -> book.getTitle())

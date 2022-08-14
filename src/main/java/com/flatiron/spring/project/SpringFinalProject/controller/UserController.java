@@ -1,14 +1,12 @@
 package com.flatiron.spring.project.SpringFinalProject.controller;
 
-import com.flatiron.spring.project.SpringFinalProject.dto.CreateReadingListDTO;
-import com.flatiron.spring.project.SpringFinalProject.dto.CreateUserDTO;
-import com.flatiron.spring.project.SpringFinalProject.dto.ReadingListByUserDTO;
-import com.flatiron.spring.project.SpringFinalProject.dto.UserSearchResultDTO;
+import com.flatiron.spring.project.SpringFinalProject.dto.*;
 import com.flatiron.spring.project.SpringFinalProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /*
 POST api/users	- Create a user.
@@ -38,5 +36,15 @@ public class UserController {
     @PostMapping("/{id}/reading_lists")
     public ReadingListByUserDTO createReadingListById(@PathVariable Long id, @RequestBody CreateReadingListDTO createReadingListDTO) {
        return userService.createReadingList(id, createReadingListDTO);
+    }
+
+    @GetMapping("/{id}/reading_lists")
+    public List<ReadingListByIdDTO> getReadingListByUserId(@PathVariable Long id) {
+        return userService.getReadingListByUserId(id);
+    }
+
+    @GetMapping("/{id}/reading_lists/{list_id}")
+    public List<ReadingListByIdDTO> getReadingListById(@PathVariable("id") Long userId, @PathVariable("list_id") Long id) {
+        return userService.getReadingListById(userId, id);
     }
 }

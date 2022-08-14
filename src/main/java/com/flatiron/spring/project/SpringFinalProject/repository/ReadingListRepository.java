@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ReadingListRepository extends JpaRepository<ReadingList, Long> {
     List<ReadingList> findAllByUserId(Long userId);
+
+    List<ReadingList> findAllByIdAndUserId(Long id, Long userId);
 }

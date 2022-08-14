@@ -14,9 +14,9 @@ public class ReadingListByIdDTO {
     @JsonProperty("reading_list_id")
     @Positive
     @NotNull
-    private Long readingListId;
+    private Long id;
     @JsonProperty("reading_list_name")
     private String name;
-    private List<ReadingListDTO> readingList;
+    private List<BookDTO> books;
 
 }
