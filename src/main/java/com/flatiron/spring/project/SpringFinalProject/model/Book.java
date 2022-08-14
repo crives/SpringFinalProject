@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -26,10 +27,9 @@ public class Book {
     @NotBlank
     private String title;
 
-    // TODO Must have pages
+    @Size(min = 1)
     private int pages;
 
-    // TODO Must be before today
     @Temporal(TemporalType.DATE)
     private Date published;
 

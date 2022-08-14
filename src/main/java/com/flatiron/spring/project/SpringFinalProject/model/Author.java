@@ -26,7 +26,6 @@ public class Author {
     private String name;
 
     @OneToMany(mappedBy = "author")
-    // TODO double check:
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Book> books = new ArrayList<>();
 
