@@ -3,6 +3,7 @@ package com.flatiron.spring.project.SpringFinalProject.service;
 import com.flatiron.spring.project.SpringFinalProject.dto.*;
 import com.flatiron.spring.project.SpringFinalProject.exception.NotFoundException;
 import com.flatiron.spring.project.SpringFinalProject.exception.ValidationException;
+import com.flatiron.spring.project.SpringFinalProject.model.Author;
 import com.flatiron.spring.project.SpringFinalProject.model.Book;
 import com.flatiron.spring.project.SpringFinalProject.model.ReadingList;
 import com.flatiron.spring.project.SpringFinalProject.model.User;
@@ -80,6 +81,8 @@ public class UserService {
         readingList.setBooks(bookList);
         readingList = readingListRepository.save(readingList);
 
+        bookList.stream()
+                .forEach(book -> mapper.map(book.getAuthor(), AuthorDTO.class));
         return mapper.map(readingList, ReadingListByUserDTO.class);
     }
 }

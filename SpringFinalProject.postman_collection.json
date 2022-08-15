@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a08a476f-cf4a-46de-bd76-616b4c2ccb63",
+		"_postman_id": "f11cc2f7-e2cf-4a20-a846-ab69cdd3056b",
 		"name": "SpringFinalProject",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -209,7 +209,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\r\n    \"name\": \"Carolines Reading List\",\r\n    \"books\": [\r\n        {\r\n            \"title\": \"Harry Potter and the Sorcerers Stone\",\r\n            \"author\": {\r\n                \"name\": \"JK Rowling\"\r\n            }\r\n        }  \r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
